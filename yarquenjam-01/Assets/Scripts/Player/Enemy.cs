@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
 	public Transform targetTransform;
-	public float speed = 2;
+	float speed = 2.5f;
 
 	void Update () {
 
@@ -14,11 +14,13 @@ public class Enemy : MonoBehaviour {
 		Vector3 direction = displacement.normalized;
 		Vector3 velocity = direction * speed;
 
+		transform.rotation = Quaternion.LookRotation(direction);
+
 		float distance = displacement.magnitude;
 
 		//enemy segue sempre a certa distância
 		if(distance > 1.5f) {
-			transform.Translate(velocity * Time.deltaTime);
+			transform.Translate(velocity * Time.deltaTime, Space.World);
 		}
 	}
 }
