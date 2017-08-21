@@ -22,13 +22,6 @@ public class PlayerController : MonoBehaviour {
 			Quaternion smooth = Quaternion.LookRotation(direction);
 			transform.rotation = Quaternion.Slerp(transform.rotation,smooth, 15 * Time.deltaTime);
 		}
-		
-		/*if (direction != Vector3.zero) {
-    transform.rotation = Quaternion.Slerp(
-        transform.rotation,
-        Quaternion.LookRotation(direction),
-        Time.deltaTime * speed
-	);*/
 	}
 }
 
