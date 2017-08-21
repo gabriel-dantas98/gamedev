@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-	
+	 
 	float speed = 7.5f;
+	Rigidbody myRigidbody;
+	Vector3 direction;
+
+	void Start(){
+		myRigidbody = GetComponent<Rigidbody>();
+	}
 
 	void Update () {
 
@@ -14,14 +20,17 @@ public class PlayerController : MonoBehaviour {
 
 		//cria um vetor resultante a partir dos direcionais e normaliza 
 		Vector3 input = new Vector3(x, 0, z);
-		Vector3 direction = input.normalized;
+		direction = input.normalized;
  		
 		//direção do movimento --> frente do personagem
-		transform.Translate (direction * speed * Time.deltaTime, Space.World);
 		if(direction != Vector3.zero){
 			Quaternion smooth = Quaternion.LookRotation(direction);
 			transform.rotation = Quaternion.Slerp(transform.rotation,smooth, 15 * Time.deltaTime);
 		}
+	}
+
+	void FixedUpdate(){
+		transform.Translate (direction * speed * Time.deltaTime, Space.World);
 	}
 }
 
