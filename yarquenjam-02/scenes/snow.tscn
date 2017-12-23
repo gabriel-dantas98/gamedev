@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://sprites/snow_far.png" type="Texture" id=1]
+[ext_resource path="res://scripts/snowfar.gd" type="Script" id=2]
+[ext_resource path="res://sprites/snow_close.png" type="Texture" id=3]
+
+[node name="snow" type="Node"]
+
+[node name="snow_far" type="Node2D" parent="."]
+
+[node name="snow_far0" type="Sprite" parent="snow_far"]
+
+transform/pos = Vector2( 0, -180 )
+texture = ExtResource( 1 )
+centered = false
+modulate = Color( 0.619446, 0.777344, 0.762541, 1 )
+script/script = ExtResource( 2 )
+velocity = Vector2( 0, 70 )
+
+[node name="snow_far1" type="Sprite" parent="snow_far"]
+
+texture = ExtResource( 1 )
+centered = false
+modulate = Color( 0.619446, 0.777344, 0.762541, 1 )
+script/script = ExtResource( 2 )
+velocity = Vector2( 0, 70 )
+
+[node name="snow_far2" type="Sprite" parent="snow_far"]
+
+transform/pos = Vector2( 0, 180 )
+texture = ExtResource( 1 )
+centered = false
+modulate = Color( 0.619446, 0.777344, 0.762541, 1 )
+script/script = ExtResource( 2 )
+velocity = Vector2( 0, 70 )
+
+[node name="snow_far1" type="Node2D" parent="."]
+
+[node name="snow_far0" type="Sprite" parent="snow_far1"]
+
+transform/pos = Vector2( 0, -180 )
+texture = ExtResource( 3 )
+centered = false
+modulate = Color( 0.761719, 0.761719, 0.761719, 1 )
+script/script = ExtResource( 2 )
+velocity = Vector2( 0, 100 )
+
+[node name="snow_far1" type="Sprite" parent="snow_far1"]
+
+texture = ExtResource( 3 )
+centered = false
+modulate = Color( 0.761719, 0.761719, 0.761719, 1 )
+script/script = ExtResource( 2 )
+velocity = Vector2( 0, 100 )
+
+[node name="snow_far2" type="Sprite" parent="snow_far1"]
+
+transform/pos = Vector2( 0, 180 )
+texture = ExtResource( 3 )
+centered = false
+modulate = Color( 0.761719, 0.761719, 0.761719, 1 )
+script/script = ExtResource( 2 )
+velocity = Vector2( 0, 100 )
+
+

@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10.6633, 10.4592 )
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Area2D
+
+const scn_explosion = preload(\"res://scenes/explosion.tscn\")
+export var armor = 2 setget set_armor
+export var velocity = Vector2()
+
+func _ready():
+	set_process(true)
+	add_to_group(\"enemy\")
+	connect(\"area_enter\", self, \"_on_area_enter\")
+	pass
+	
+func _process(delta):
+	translate(velocity * delta)
+	
+	if get_pos().y-15 >= get_viewport_rect().size.height:
+		queue_free()
+	pass
+	
+func _on_area_enter(other):
+	if other.is_in_group(\"santa\"):
+		other.armor -= 1
+		create_explosion()
+		queue_free()
+	pass		
+	
+func set_armor(new_value):
+	armor = new_value
+	if armor <= 0 :
+		create_explosion()
+		queue_free()
+	pass
+	
+func create_explosion():
+	var explosion = scn_explosion.instance()
+	explosion.set_pos(get_pos())
+	utils.main_node.add_child(explosion)
+	pass
+"
+
+[node name="enemy" type="Area2D"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = SubResource( 2 )
+armor = 2
+velocity = Vector2( 0, 0 )
+
+[node name="sprite" type="Sprite" parent="."]
+
+transform/rot = 180.0
+
+[node name="shape" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+

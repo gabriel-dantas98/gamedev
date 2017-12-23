@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://scenes/enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://sprites/duendin_0.png" type="Texture" id=2]
+[ext_resource path="res://sprites/duendin_1.png" type="Texture" id=3]
+[ext_resource path="res://sprites/duendin_2.png" type="Texture" id=4]
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends \"res://scripts/enemy.gd\"
+const scn_explosion = preload(\"res://scenes/explosion.tscn\")
+
+export var armor = 1 setget set_armor
+
+func _ready():
+	get_node(\"anim\").play(\"walk\")
+	randomize()
+	velocity = Vector2(rand_range(rand_range(-10, 10), rand_range(-50, 50)), 150)
+	set_process(true)
+	add_to_group(\"enemy\")
+	connect(\"area_enter\", self, \"_on_area_enter\")
+	pass
+	
+func _process(delta):
+	translate(velocity * delta)
+	
+	if get_pos().y-15 >= get_viewport_rect().size.height:
+		queue_free()
+	pass
+	
+func _on_area_enter(other):
+	if other.is_in_group(\"santa\"):
+		other.armor -= 1
+		queue_free()
+	pass	
+	
+func set_armor(new_value):
+	armor = new_value
+	if armor <= 0 :
+		utils.find_node(\"tex_score\").score += 5
+		create_explosion()
+		queue_free()
+	pass	
+	
+func create_explosion():
+	var explosion = scn_explosion.instance()
+	explosion.set_pos(get_pos())
+	utils.main_node.add_child(explosion)
+	pass	
+"
+
+[sub_resource type="Animation" id=4]
+
+resource/name = "walk"
+length = 0.5
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("sprite:texture")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.2, 0.4 ),
+"transitions": FloatArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]
+}
+
+[node name="enemy_diagonal" instance=ExtResource( 1 )]
+
+script/script = SubResource( 3 )
+armor = 1
+
+[node name="sprite" parent="."]
+
+texture = ExtResource( 2 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/walk = SubResource( 4 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+

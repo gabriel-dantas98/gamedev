@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://scenes/laser.tscn" type="PackedScene" id=1]
+[ext_resource path="res://sprites/biscoito_tiro.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends \"res://scripts/laser.gd\"
+
+func _ready():
+	connect(\"area_enter\", self, \"_on_area_enter\")
+	audio_player.play(\"enemy_tiro\")
+	pass
+
+func _on_area_enter(other):
+	if other.is_in_group(\"santa\"):
+		other.armor -= 1
+		create_flare_enemy()
+		queue_free()
+	pass"
+
+[sub_resource type="CapsuleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 6.7337
+height = 16.3379
+
+[node name="laser_enemy" instance=ExtResource( 1 )]
+
+transform/scale = Vector2( 0.6, 0.6 )
+script/script = SubResource( 1 )
+velocity = Vector2( 0, 250 )
+
+[node name="sprite" parent="."]
+
+transform/pos = Vector2( 1.19433, 2.17683 )
+transform/scale = Vector2( 1.07465, 1.13605 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" parent="."]
+
+transform/pos = Vector2( 2.03961, 1.16549 )
+shape = SubResource( 2 )
+
+
