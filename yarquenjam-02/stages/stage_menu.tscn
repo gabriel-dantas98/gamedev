@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=1]
+[gd_scene load_steps=18 format=1]
 
 [ext_resource path="res://scenes/snow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/button_normal.png" type="Texture" id=2]
@@ -42,6 +42,19 @@ font/use_mipmaps = false
 font/use_filter = false
 font/font = ExtResource( 5 )
 
+[sub_resource type="GDScript" id=7]
+
+script/source = "extends TextureButton
+
+func _ready():
+	connect(\"pressed\", self, \"_on_pressed\")
+	pass
+	
+func _on_pressed():
+	get_tree().quit()
+	pass
+"
+
 [sub_resource type="GDScript" id=4]
 
 script/source = "extends TextureButton
@@ -78,11 +91,11 @@ func _ready():
 	pass
 	
 func _on_pressed():
-	get_tree().quit()
+	OS.shell_open(\"https://github.com/gabriel-dantas98/gamedev/tree/master/yarquenjam-02\")
 	pass
 "
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=8]
 
 script/source = "extends TextureFrame
 
@@ -92,7 +105,7 @@ func _ready():
 
 "
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=9]
 
 font/size = 16
 font/use_mipmaps = false
@@ -149,16 +162,53 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="btn_quit" type="TextureButton" parent="hud"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 67.0
+margin/top = 165.0
+margin/right = 114.0
+margin/bottom = 181.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+textures/normal = ExtResource( 2 )
+textures/pressed = ExtResource( 3 )
+textures/hover = ExtResource( 4 )
+params/resize_mode = 0
+params/stretch_mode = 0
+script/script = SubResource( 7 )
+
+[node name="label" type="Label" parent="hud/btn_quit"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 1.0
+margin/top = 0.0
+margin/right = 48.0
+margin/bottom = 17.0
+custom_fonts/font = SubResource( 3 )
+text = "QUIT"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="btn_git1" type="TextureButton" parent="hud"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 104.0
-margin/top = 295.0
-margin/right = 130.0
-margin/bottom = 307.0
+margin/left = 132.0
+margin/top = 290.0
+margin/right = 158.0
+margin/bottom = 302.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -190,10 +240,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 137.0
-margin/top = 295.0
-margin/right = 171.0
-margin/bottom = 307.0
+margin/left = 129.0
+margin/top = 301.0
+margin/right = 165.0
+margin/bottom = 313.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -209,7 +259,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 27.0
+margin/right = 35.0
 margin/bottom = 13.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -225,9 +275,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 80.0
+margin/left = 105.0
 margin/top = 293.0
-margin/right = 100.0
+margin/right = 125.0
 margin/bottom = 313.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -236,44 +286,7 @@ textures/normal = ExtResource( 6 )
 textures/hover = ExtResource( 7 )
 params/resize_mode = 0
 params/stretch_mode = 0
-script/script = SubResource( 2 )
-
-[node name="btn_quit" type="TextureButton" parent="hud"]
-
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 67.0
-margin/top = 165.0
-margin/right = 114.0
-margin/bottom = 181.0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-textures/normal = ExtResource( 2 )
-textures/pressed = ExtResource( 3 )
-textures/hover = ExtResource( 4 )
-params/resize_mode = 0
-params/stretch_mode = 0
 script/script = SubResource( 6 )
-
-[node name="label" type="Label" parent="hud/btn_quit"]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 1.0
-margin/top = 0.0
-margin/right = 48.0
-margin/bottom = 17.0
-custom_fonts/font = SubResource( 3 )
-text = "QUIT"
-align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
 [node name="tex_bestscore" type="TextureFrame" parent="hud"]
 
@@ -286,7 +299,7 @@ margin/top = 33.0
 margin/right = 114.0
 margin/bottom = 53.0
 stretch_mode = 0
-script/script = SubResource( 7 )
+script/script = SubResource( 8 )
 
 [node name="label" type="Label" parent="hud/tex_bestscore"]
 
@@ -298,7 +311,7 @@ margin/left = 3.0
 margin/top = 11.0
 margin/right = 44.0
 margin/bottom = 25.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
@@ -322,7 +335,7 @@ margin/left = -25.0
 margin/top = -1.0
 margin/right = 71.0
 margin/bottom = 13.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 1
